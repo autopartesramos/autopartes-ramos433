@@ -23,7 +23,7 @@ function formatMoney(value: number | null) {
 }
 
 export default function ProductosTable({ productos, rol, columnas }: Props) {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<any>(null);
 
   return (
     <>
