@@ -30,7 +30,8 @@ function formatMoney(value: number | null | undefined) {
 }
 
 export default function ProductosTable({ productos, rol, columnas }: Props) {
-  const [selected, setSelected] = useState<Producto | null>(null);
+  // FIX ESTABLE PARA VERCEL (evita error "never")
+  const [selected, setSelected] = useState<any>(null);
 
   return (
     <>
@@ -107,7 +108,7 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
                     </td>
                   )}
 
-                  {/* STOCK SIMPLE (NÚMERO) */}
+                  {/* STOCK SIMPLE */}
                   {columnas.stock_visible && (
                     <td className="px-4 py-3 text-center font-semibold">
                       {stock}
@@ -152,24 +153,24 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
 
             <div className="space-y-2 text-sm">
 
-              <p><b>Código:</b> {selected.codigo}</p>
-              <p><b>Rubro:</b> {selected.rubro}</p>
-              <p><b>Descripción:</b> {selected.descripcion}</p>
-              <p><b>Proveedor:</b> {selected.proveedor}</p>
-              <p><b>Precio compra:</b> {formatMoney(selected.precio_compra)}</p>
-              <p><b>Precio venta:</b> {formatMoney(selected.precio_general)}</p>
-              <p><b>Precio ML:</b> {formatMoney(selected.precio_ml)}</p>
-              <p><b>Stock:</b> {selected.stock}</p>
-              <p><b>Facturado:</b> {selected.facturado ? "Sí" : "No"}</p>
-              <p><b>Observaciones:</b> {selected.observaciones}</p>
-              <p><b>Estado:</b> {selected.activo ? "Activo" : "Inactivo"}</p>
+              <p><b>Código:</b> {selected?.codigo}</p>
+              <p><b>Rubro:</b> {selected?.rubro}</p>
+              <p><b>Descripción:</b> {selected?.descripcion}</p>
+              <p><b>Proveedor:</b> {selected?.proveedor}</p>
+              <p><b>Precio compra:</b> {formatMoney(selected?.precio_compra)}</p>
+              <p><b>Precio venta:</b> {formatMoney(selected?.precio_general)}</p>
+              <p><b>Precio ML:</b> {formatMoney(selected?.precio_ml)}</p>
+              <p><b>Stock:</b> {selected?.stock}</p>
+              <p><b>Facturado:</b> {selected?.facturado ? "Sí" : "No"}</p>
+              <p><b>Observaciones:</b> {selected?.observaciones}</p>
+              <p><b>Estado:</b> {selected?.activo ? "Activo" : "Inactivo"}</p>
 
             </div>
 
             <div className="flex justify-end gap-2 mt-6">
 
               <Link
-                href={`/productos/${selected.id}/editar`}
+                href={`/productos/${selected?.id}/editar`}
                 className="border px-3 py-1 rounded"
               >
                 Editar
