@@ -3,32 +3,37 @@
 import { useState } from "react";
 import Link from "next/link";
 
+type Producto = {
+  id: number;
+  codigo?: string;
+  rubro?: string;
+  descripcion?: string;
+  proveedor?: string;
+  precio_compra?: number;
+  precio_general?: number;
+  precio_ml?: number;
+  stock?: number;
+  facturado?: boolean;
+  observaciones?: string;
+  activo?: boolean;
+};
+
 type Props = {
-  productos: any[];
+  productos: Producto[];
   rol: "admin" | "vendedor";
   columnas: any;
 };
 
-function getStockColor(stock: any) {
-  const s = Number(stock ?? 0);
-
-  if (s > 2) return "bg-green-500";
-  if (s > 0) return "bg-yellow-400";
-  return "bg-red-500";
-}
-
-function formatMoney(value: number | null) {
+function formatMoney(value: number | null | undefined) {
   if (value === null || value === undefined) return "-";
   return `$${Math.round(value).toLocaleString("es-AR")}`;
 }
 
 export default function ProductosTable({ productos, rol, columnas }: Props) {
-  const [selected, setSelected] = useState<any>(null);
+  const [selected, setSelected] = useState<Producto | null>(null);
 
   return (
     <>
-   
-
       {/* TABLA */}
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
@@ -79,15 +84,15 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
                 >
 
                   {columnas.codigo_visible && (
-                    <td className="px-4 py-3">{p.codigo}</td>
+                    <td className="px-4 py-3">{p.codigo ?? "-"}</td>
                   )}
 
                   {columnas.rubro_visible && (
-                    <td className="px-4 py-3">{p.rubro}</td>
+                    <td className="px-4 py-3">{p.rubro ?? "-"}</td>
                   )}
 
                   {columnas.descripcion_visible && (
-                    <td className="px-4 py-3">{p.descripcion}</td>
+                    <td className="px-4 py-3">{p.descripcion ?? "-"}</td>
                   )}
 
                   {columnas.precio_general_visible && (
@@ -102,10 +107,10 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
                     </td>
                   )}
 
-                  {/* 🔥 SOLO CAMBIO: MOSTRAR NÚMERO DE STOCK */}
+                  {/* STOCK SIMPLE (NÚMERO) */}
                   {columnas.stock_visible && (
                     <td className="px-4 py-3 text-center font-semibold">
-                      {p.stock ?? 0}
+                      {stock}
                     </td>
                   )}
 
@@ -131,7 +136,7 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
         </table>
       </div>
 
-      {/* MODAL DETALLE (SIN CAMBIOS) */}
+      {/* MODAL */}
       {selected && (
         <div
           className="fixed inset-0 bg-black/50 flex items-center justify-center"
