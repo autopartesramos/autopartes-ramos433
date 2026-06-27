@@ -6,6 +6,7 @@ import Link from "next/link";
 type Producto = {
   id: number;
   codigo?: string;
+  codigo_original?: string;
   rubro?: string;
   descripcion?: string;
   proveedor?: string;
@@ -44,6 +45,10 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
               {columnas.codigo_visible && (
                 <th className="px-4 py-3">Código</th>
               )}
+
+              {columnas.codigo_original_visible && (
+  <th className="px-4 py-3">Código original</th>
+)}
 
               {columnas.rubro_visible && (
                 <th className="px-4 py-3">Rubro</th>
@@ -87,6 +92,10 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
                   {columnas.codigo_visible && (
                     <td className="px-4 py-3">{p.codigo ?? "-"}</td>
                   )}
+
+                  {columnas.codigo_original_visible && (
+  <td className="px-4 py-3">{p.codigo_original ?? "-"}</td>
+)}
 
                   {columnas.rubro_visible && (
                     <td className="px-4 py-3">{p.rubro ?? "-"}</td>
@@ -154,6 +163,7 @@ export default function ProductosTable({ productos, rol, columnas }: Props) {
             <div className="space-y-2 text-sm">
 
               <p><b>Código:</b> {selected?.codigo}</p>
+              <p><b>Código original:</b> {selected?.codigo_original}</p>
               <p><b>Rubro:</b> {selected?.rubro}</p>
               <p><b>Descripción:</b> {selected?.descripcion}</p>
               <p><b>Proveedor:</b> {selected?.proveedor}</p>
